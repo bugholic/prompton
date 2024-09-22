@@ -12,9 +12,7 @@ export const connectToDB = async () =>{
 
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
-            dbName:"promptonDB",
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            dbName:"prompton_DB123"
         })
         isConnected = true
         console.log('MongoDB connected')

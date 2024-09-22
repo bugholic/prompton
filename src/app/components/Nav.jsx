@@ -8,7 +8,7 @@ import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
   const { data: session } = useSession();
-  const isUserLoggedIn = true;
+  const isUserLoggedIn = session;
   const [providers, setProviders] = useState();
   const [toggleDropDown, setToggleDropDown] = useState();
 
@@ -42,16 +42,22 @@ const Nav = () => {
               <Link href="/create-prompt" className="black_btn mr-2">
                 Create Post
               </Link>
-              <button type="button" className="outline_btn">
+              <button
+                type="button"
+                className="outline_btn"
+                onClick={() => {
+                  signOut();
+                }}
+              >
                 Sign Out
               </button>
               <Link href="/profile">
                 <Image
-                  src={logo}
+                  src={session?.user.image}
                   width={30}
                   height={30}
                   alt="profile"
-                  className="mr-4"
+                  className="mr-4 rounded-full"
                 />
               </Link>
             </div>
@@ -80,11 +86,11 @@ const Nav = () => {
           isUserLoggedIn ? (
             <div className="flex">
               <Image
-                src={logo}
+                src={session?.user.image}
                 width={30}
                 height={30}
                 alt="profile"
-                className="mr-4"
+                className="mr-4 rounded-full"
                 onClick={() => setToggleDropDown((prev) => !prev)}
               />
               {toggleDropDown && (
