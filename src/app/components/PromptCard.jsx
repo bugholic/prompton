@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import tick from "../assets/icons/tick.svg";
 import copy from "../assets/icons/copy.svg";
+import Link from "next/link";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const { data: session } = useSession();
@@ -11,6 +12,8 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   const pathName = usePathname();
   const router = useRouter();
 
+
+  
   const handleCopy = () => {
     setCopied(post.prompt);
     navigator.clipboard.writeText(post.prompt);
@@ -32,10 +35,12 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           />
 
           <div className="flex flex-col">
-            <h3 className="font-semibold text-gray-900 cursor-pointer">
-              {post.creator?.username}
-            </h3>
-            <p className="text-sm text-gray-500">{post.creator?.email}</p>
+            <Link href={session?.user.id === post.creator?._id ?`/profile` : `/profile/${post.creator?._id}` }>
+              <h3 className="font-semibold text-gray-900 cursor-pointer">
+                {post.creator?.username}
+              </h3>
+            </Link>
+              <p className="text-sm text-gray-500">{post.creator?.email}</p>
           </div>
         </div>
 
